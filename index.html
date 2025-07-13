@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Electricity Bill Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #283e51, #485563);
+      color: #fff;
+      margin: 0;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+
+    button {
+      background-color: #f39c12;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      margin: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #d87e0e;
+    }
+
+    pre {
+      background: rgba(0,0,0,0.3);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: left;
+      max-width: 600px;
+      margin: 30px auto 0 auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <h2>🔌 Dynamic Electricity Bill Tracker</h2>
+
+  <button onclick="fetchUsage()">1️⃣ Fetch Usage from API</button>
+  <button onclick="runTracker()">2️⃣ Run C++ Bill Tracker</button>
+
+  <pre id="output">Waiting for data...</pre>
+
+  <script>
+    function fetchUsage() {
+      fetch("http://localhost:5000/get-usage")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("output").innerText = "✅ Usage: " + data.data.join(", ");
+        })
+        .catch(err => {
+          document.getElementById("output").innerText = "⚠️ Failed to fetch usage.";
+          console.error("Fetch usage error:", err);
+        });
+    }
+
+    function runTracker() {
+      fetch("http://localhost:5000/run-tracker")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("output").innerText += "\n\n📊 Bill Output:\n" + data.csv;
+        })
+        .catch(err => {
+          document.getElementById("output").innerText += "\n❌ Failed to run tracker.";
+          console.error("Run tracker error:", err);
+        });
+    }
+  </script>
+</body>
+</html>
