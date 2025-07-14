@@ -1,0 +1,5 @@
+✅ Electricity Bill Summary
+--------------------------
+Total Units: 210
+Total Bill: ₹1050
+Not enough data for 7-day sliding window.
